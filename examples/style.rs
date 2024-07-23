@@ -1,7 +1,7 @@
 use col_rs::{Span, Weight};
 
 fn main() {
-    println!("colorterm: {}", std::env::var("COLORTERM").unwrap());
+	println!("colorterm: {}", std::env::var("COLORTERM").unwrap());
 	let span1 = Span::new("Red on Blue".to_string())
 		.fg((255, 0, 0))
 		.bg((0, 0, 255));

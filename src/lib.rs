@@ -30,54 +30,67 @@ impl Span {
 		}
 	}
 
+	// TODO: add separate r, g, b parameters instead of tuple (BREAKING CHANGE)
+	#[inline]
 	pub fn fg(mut self, color: RGB) -> Self {
 		self.fg = Some(color);
 		self
 	}
 
+	// TODO: add separate r, g, b parameters instead of tuple (BREAKING CHANGE)
+	#[inline]
 	pub fn bg(mut self, color: RGB) -> Self {
 		self.bg = Some(color);
 		self
 	}
 
+	// TODO: add `.bold()` method
+	#[inline]
 	pub fn weight(mut self, weight: Weight) -> Self {
 		self.weight = Some(weight);
 		self
 	}
 
+	#[inline]
 	pub fn underline(mut self) -> Self {
 		self.underline = true;
 		self
 	}
 
+	#[inline]
 	pub fn strike_through(mut self) -> Self {
 		self.strike_through = true;
 		self
 	}
 
+	#[inline]
 	pub fn italic(mut self) -> Self {
 		self.italic = true;
 		self
 	}
 
+	#[inline]
 	pub fn reset(&mut self) {
 		*self = Self::default();
 	}
 }
+
+// TODO: add css colors enum, strum_macros, helper methods like
+// "text".blue()
 
 impl std::fmt::Display for Span {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		let mut codes = Vec::new();
 
 		// Add foreground color
-        if let Some(fg) = self.fg {
-            codes.push(format!("38;2;{};{};{}", fg.0, fg.1, fg.2));
-        }
+		if let Some(fg) = self.fg {
+			codes.push(format!("38;2;{};{};{}", fg.0, fg.1, fg.2));
+		}
 
 		// Add background color
-        if let Some(bg) = self.bg {
-            codes.push(format!("48;2;{};{};{}", bg.0, bg.1, bg.2));
-        }
+		if let Some(bg) = self.bg {
+			codes.push(format!("48;2;{};{};{}", bg.0, bg.1, bg.2));
+		}
 
 		// Add other styles
 		if let Some(weight) = &self.weight {
