@@ -22,12 +22,15 @@ fn main() {
 
 	let span5 = Span::new("Red Faint Strike-Through".to_string())
 		.fg((255, 0, 0))
-		.weight(Weight::Light)
+		.weight(Weight::Faint)
 		.strike_through();
+
+	let span6 = Span::new("Normal text".to_string());
 
 	println!("{}", span1);
 	println!("{}", span2);
 	println!("{}", span3);
 	println!("{}", span4);
 	println!("{}", span5);
+	println!("{}", span6);
 }
