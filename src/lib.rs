@@ -1,10 +1,5 @@
-pub type RGB = (u8, u8, u8);
-
-#[derive(Debug)]
-pub enum Weight {
-	Bold,
-	Faint,
-}
+mod style;
+pub use style::{Style, Weight, RGB};
 
 #[derive(Default, Debug)]
 pub struct Span {
@@ -21,12 +16,7 @@ impl Span {
 	pub fn new(text: String) -> Self {
 		Self {
 			text,
-			fg: None,
-			bg: None,
-			weight: None,
-			underline: false,
-			strike_through: false,
-			italic: false,
+            ..Default::default()
 		}
 	}
 
