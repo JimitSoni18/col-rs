@@ -1,40 +1,70 @@
-#[derive(Debug)]
+#[derive(Debug, Clone, Default)]
 pub enum Weight {
+    #[default]
+    Normal,
 	Bold,
 	Faint,
 }
 
-pub type RGB = (u8, u8, u8);
+pub type RGB = [u8;3];
 
-#[derive(Debug, Default)]
+#[derive(Debug, Default, Clone)]
 pub struct Style {
-    weight: Option<crate::Weight>,
-    fg: Option<crate::RGB>,
-    bg: Option<crate::RGB>,
-	underline: bool,
-	strike_through: bool,
-	italic: bool,
+	pub(crate) weight: Weight,
+	pub(crate) fg: Option<[u8; 3]>,
+	pub(crate) bg: Option<[u8; 3]>,
+	pub(crate) underline: bool,
+	pub(crate) strike_through: bool,
+	pub(crate) italic: bool,
 }
 
 impl Style {
-	// TODO: add separate r, g, b parameters instead of tuple (BREAKING CHANGE)
 	#[inline]
-	pub fn fg(mut self, color: RGB) -> Self {
-		self.fg = Some(color);
+	pub fn fg(mut self, r: u8, g: u8, b: u8) -> Self {
+		self.fg = Some([r, g, b]);
 		self
 	}
 
-	// TODO: add separate r, g, b parameters instead of tuple (BREAKING CHANGE)
 	#[inline]
-	pub fn bg(mut self, color: RGB) -> Self {
-		self.bg = Some(color);
+	pub fn set_fg(&mut self, r: u8, g: u8, b: u8) {
+		self.fg = Some([r, g, b]);
+	}
+
+	#[inline]
+	pub fn reset_fg(&mut self) {
+		self.fg = None;
+	}
+
+	#[inline]
+	pub fn get_fg(&self) -> &Option<RGB> {
+		&self.fg
+	}
+
+	#[inline]
+	pub fn bg(mut self, r: u8, g: u8, b: u8) -> Self {
+		self.bg = Some([r,g,b]);
 		self
+	}
+
+	#[inline]
+	pub fn set_bg(&mut self, r: u8, g: u8, b: u8) {
+		self.bg = Some([r, g, b]);
+	}
+
+	#[inline]
+	pub fn reset_bg(&mut self) {
+		self.bg = None;
+	}
+
+	#[inline]
+	pub fn get_bg(&self) -> &Option<RGB> {
+		&self.bg
 	}
 
 	// TODO: add `.bold()` method
 	#[inline]
 	pub fn weight(mut self, weight: Weight) -> Self {
-		self.weight = Some(weight);
+		self.weight = weight;
 		self
 	}
 
@@ -61,4 +91,3 @@ impl Style {
 		*self = Self::default();
 	}
 }
-
